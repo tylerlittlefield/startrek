@@ -64,6 +64,6 @@ ds9$Emissary %>%
   glimpse()
 ```
 
-```{r echo=FALSE}
+```{r echo=FALSE, out.width="550px", fig.align='center'}
 knitr::include_graphics("man/figures/parse-diagram.png")
 ```
