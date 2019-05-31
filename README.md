@@ -106,4 +106,4 @@ ds9$Emissary %>%
 #> $ line        <chr> "It's gonna be okay... I'll get you  out of there...…
 ```
 
-<img src="man/figures/parse-diagram.png" width="550px" style="display: block; margin: auto;" />
+<img src="man/figures/parse-diagram.png" width="550px" />
