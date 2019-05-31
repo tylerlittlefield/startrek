@@ -1,16 +1,18 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# startrek
+# startrek <img src="man/figures/logo.png" align="right" height=150/>
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.org/tyluRp/startrek.svg?branch=master)](https://travis-ci.org/tyluRp/startrek)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/tyluRp/startrek?branch=master&svg=true)](https://ci.appveyor.com/project/tyluRp/startrek)
 <!-- badges: end -->
 
-NOTE: Work in progress, will update later with documentation and
-additional Star Trek series (maybe).
-
-The goal of startrek is to …
+The goal of startrek is to access Star Trek transcripts in a
+`data.frame` for easy analysis.
 
 ## Installation
 
@@ -25,14 +27,13 @@ repository.
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to access a transcript
+dataset:
 
 ``` r
 library(startrek)
 library(tibble)
 
-str(names(tng))
-#>  chr [1:176] "Encounter at Farpoint" "The Naked Now" "Code of Honor" ...
 as_tibble(tng$`The Inner Light`)
 #> # A tibble: 410 x 5
 #>    perspective     setting            character description line           
@@ -48,4 +49,11 @@ as_tibble(tng$`The Inner Light`)
 #>  9 5 ANGLE - VIEW… An alien object o… PICARD    <NA>        Magnify.       
 #> 10 5 ANGLE - VIEW… The object spring… PICARD    <NA>        Mister Data?   
 #> # … with 400 more rows
+```
+
+All available datasets can be shown by running:
+
+``` r
+str(names(tng))
+#>  chr [1:176] "Encounter at Farpoint" "The Naked Now" "Code of Honor" ...
 ```

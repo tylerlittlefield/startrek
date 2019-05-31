@@ -1,7 +1,7 @@
 ## code to prepare `tng` dataset goes here
 library(tidyverse)
 
-scripts <- list.files("inst/extdata/Scripts - TNG", full.names = TRUE)
+scripts <- list.files("inst/extdata/scripts-tng", full.names = TRUE)
 
 extract_titles <- function(scripts) {
   message(glue::glue("Fetching titles from: {scripts}"))
@@ -81,7 +81,7 @@ scripts_to_df <- function(x) {
     select(perspective, setting, character, description, line)
 }
 
-titles <- extract_titles("inst/extdata/Scripts - TNG")
+titles <- extract_titles("inst/extdata/scripts-tng")
 tng <- lapply(scripts, scripts_to_df)
 
 names(tng) <- titles
