@@ -35,6 +35,7 @@ To access an episode transcript from The Next Generation series, see the
 ``` r
 library(startrek)
 library(tibble)
+library(dplyr)
 
 as_tibble(tng$`The Inner Light`)
 #> # A tibble: 410 x 5
@@ -71,4 +72,20 @@ as_tibble(ds9$Chimera)
 #>  9 2 CONTINUED: O'Brien's features… ODO       (misundersta… You don't thin…
 #> 10 2 CONTINUED: O'Brien's features… O'BRIEN   <NA>          I'm sure she w…
 #> # … with 405 more rows
+```
+
+The columns have been arranged in a specific order to read from left to
+right or when using `glimpse()`, top to bottom. For example:
+
+``` r
+as_tibble(ds9$Chimera) %>% 
+  .[5, ] %>% 
+  glimpse()
+#> Observations: 1
+#> Variables: 5
+#> $ perspective <chr> "2 INT. RUNABOUT"
+#> $ setting     <chr> "O'Brien's surprised to hear he was asleep that long…
+#> $ character   <chr> "O'BRIEN"
+#> $ description <chr> "(taking a seat)"
+#> $ line        <chr> "What's that?"
 ```

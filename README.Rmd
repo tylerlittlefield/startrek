@@ -34,9 +34,10 @@ Or, just download the data to disk from the data folder in this repository.
 
 To access an episode transcript from The Next Generation series, see the `tng` list:
 
-```{r example}
+```{r example, message=FALSE}
 library(startrek)
 library(tibble)
+library(dplyr)
 
 as_tibble(tng$`The Inner Light`)
 ```
@@ -46,4 +47,14 @@ The Deep Space Nine series is also available:
 ```{r}
 as_tibble(ds9$Chimera)
 ```
+
+The columns have been arranged in a specific order to read from left to right or when using `glimpse()`, top to bottom. For example:
+
+```{r}
+as_tibble(ds9$Chimera) %>% 
+  .[5, ] %>% 
+  glimpse()
+```
+
+
 
