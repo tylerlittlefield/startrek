@@ -12,7 +12,9 @@ status](https://ci.appveyor.com/api/projects/status/github/tyluRp/startrek?branc
 <!-- badges: end -->
 
 The goal of startrek is to access Star Trek transcripts in a
-`data.frame` for easy analysis.
+[`data.frame`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/data.frame.html)
+for easy analysis. All transcripts have been parsed from text files to a
+[tidy data](http://vita.had.co.nz/papers/tidy-data.html) format.
 
 ## Installation
 
@@ -27,8 +29,8 @@ repository.
 
 ## Example
 
-This is a basic example which shows you how to access a transcript
-dataset:
+To access an episode transcript from The Next Generation series, see the
+`tng` list:
 
 ``` r
 library(startrek)
@@ -49,11 +51,4 @@ as_tibble(tng$`The Inner Light`)
 #>  9 5 ANGLE - VIEW… An alien object o… PICARD    <NA>        Magnify.       
 #> 10 5 ANGLE - VIEW… The object spring… PICARD    <NA>        Mister Data?   
 #> # … with 400 more rows
-```
-
-All available datasets can be shown by running:
-
-``` r
-str(names(tng))
-#>  chr [1:176] "Encounter at Farpoint" "The Naked Now" "Code of Honor" ...
 ```
