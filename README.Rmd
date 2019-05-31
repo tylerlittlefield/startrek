@@ -76,3 +76,7 @@ ds9$emissary %>%
 ```{r echo=FALSE, out.width="550px"}
 knitr::include_graphics("man/figures/parse-diagram.png")
 ```
+
+## Acknowledgements
+
+* Transcripts were taken from [Star Trek Minutiae](http://www.st-minutiae.com/resources/scripts/)

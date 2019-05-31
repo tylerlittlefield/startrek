@@ -111,3 +111,8 @@ ds9$emissary %>%
 ```
 
 <img src="man/figures/parse-diagram.png" width="550px" />
+
+## Acknowledgements
+
+  - Transcripts were taken from [Star Trek
+    Minutiae](http://www.st-minutiae.com/resources/scripts/)
