@@ -18,14 +18,18 @@ for easy analysis. All transcripts have been parsed from text files to a
 
 ## Installation
 
-You can install the development version from GitHub:
+Keep in mind that this is a data package which stores the data locally.
+There aren’t any functions which scrape data from a reliable source. As
+of now, the size of this package is ~16.73 MB.
+
+If the size isn’t a concern, you can install the development version
+from GitHub:
 
 ``` r
 devtools::install_github("tylurp/startrek")
 ```
 
-Or, just download the data to disk from the data folder in this
-repository.
+Or, download the data to disk from the data folder in this repository.
 
 ## Example
 

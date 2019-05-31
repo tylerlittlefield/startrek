@@ -11,6 +11,13 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+
+pkg_size <- function(package) {
+  root <- find.package(package)
+  rel_paths <- list.files(root, all.files = TRUE, recursive = TRUE)
+  abs_paths <- file.path(root, rel_paths)
+  paste0(round(sum(file.info(abs_paths)$size) / 1e6, 2), " MB")
+}
 ```
 # startrek <img src="man/figures/logo.png" align="right" height=150/>
 <!-- badges: start -->
@@ -22,13 +29,15 @@ The goal of startrek is to access Star Trek transcripts in a [`data.frame`](http
 
 ## Installation
 
-You can install the development version from GitHub:
+Keep in mind that this is a data package which stores the data locally. There aren't any functions which scrape data from a reliable source. As of now, the size of this package is ~`r pkg_size("startrek")`. 
+
+If the size isn't a concern, you can install the development version from GitHub:
 
 ``` r
 devtools::install_github("tylurp/startrek")
 ```
 
-Or, just download the data to disk from the data folder in this repository.
+Or, download the data to disk from the data folder in this repository.
 
 ## Example
 
