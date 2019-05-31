@@ -20,7 +20,7 @@ for easy analysis. All transcripts have been parsed from text files to a
 
 Keep in mind that this is a data package which stores the data locally.
 There aren’t any functions which scrape data from a reliable source. As
-of now, the size of this package is ~16.73 MB.
+of now, the size of this package is ~41.68 MB.
 
 If the size isn’t a concern, you can install the development version
 from GitHub:
@@ -41,7 +41,7 @@ library(startrek)
 library(tibble)
 library(dplyr)
 
-as_tibble(tng$`The Inner Light`)
+tng$the_inner_light
 #> # A tibble: 410 x 5
 #>    perspective     setting            character description line           
 #>    <chr>           <chr>              <chr>     <chr>       <chr>          
@@ -61,7 +61,7 @@ as_tibble(tng$`The Inner Light`)
 The Deep Space Nine series is also available:
 
 ``` r
-as_tibble(ds9$Chimera)
+ds9$chimera
 #> # A tibble: 415 x 5
 #>    perspective  setting             character description   line           
 #>    <chr>        <chr>               <chr>     <chr>         <chr>          
@@ -82,7 +82,7 @@ The columns have been arranged in a specific order to read from left to
 right or when using `glimpse()`, top to bottom. For example:
 
 ``` r
-as_tibble(ds9$Chimera) %>% 
+ds9$chimera %>% 
   .[5, ] %>% 
   glimpse()
 #> Observations: 1
@@ -98,7 +98,7 @@ The raw text files were parsed using the scripts found in the data-raw
 folder of this repository. Below is a visual explanation:
 
 ``` r
-ds9$Emissary %>% 
+ds9$emissary %>% 
   .[26, ] %>% 
   glimpse()
 #> Observations: 1

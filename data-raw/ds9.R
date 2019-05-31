@@ -80,7 +80,8 @@ scripts_to_df <- function(x) {
 }
 
 ds9 <- lapply(scripts, scripts_to_df)
-
-names(ds9) <- gsub('"', "", titles)
+titles <- gsub('"', "", titles)
+titles <- make_clean_names(titles, "snake")
+names(ds9) <- titles
 
 usethis::use_data(ds9, overwrite = TRUE)

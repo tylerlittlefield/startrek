@@ -48,19 +48,19 @@ library(startrek)
 library(tibble)
 library(dplyr)
 
-as_tibble(tng$`The Inner Light`)
+tng$the_inner_light
 ```
 
 The Deep Space Nine series is also available:
 
 ```{r}
-as_tibble(ds9$Chimera)
+ds9$chimera
 ```
 
 The columns have been arranged in a specific order to read from left to right or when using `glimpse()`, top to bottom. For example:
 
 ```{r}
-as_tibble(ds9$Chimera) %>% 
+ds9$chimera %>% 
   .[5, ] %>% 
   glimpse()
 ```
@@ -68,7 +68,7 @@ as_tibble(ds9$Chimera) %>%
 The raw text files were parsed using the scripts found in the data-raw folder of this repository. Below is a visual explanation:
 
 ```{r parse_visual}
-ds9$Emissary %>% 
+ds9$emissary %>% 
   .[26, ] %>% 
   glimpse()
 ```

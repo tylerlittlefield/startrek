@@ -1,5 +1,6 @@
 ## code to prepare `tng` dataset goes here
 library(tidyverse)
+library(janitor)
 
 scripts <- list.files("inst/extdata/scripts-tng", full.names = TRUE)
 
@@ -82,8 +83,9 @@ scripts_to_df <- function(x) {
 }
 
 titles <- extract_titles("inst/extdata/scripts-tng")
+titles <- make_clean_names(titles, "snake")
 tng <- lapply(scripts, scripts_to_df)
 
 names(tng) <- titles
 
-usethis::use_data(tng)
+usethis::use_data(tng, overwrite = TRUE)
