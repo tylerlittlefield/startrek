@@ -20,7 +20,7 @@ for easy analysis. All transcripts have been parsed from text files to a
 
 Keep in mind that this is a data package which stores the data locally.
 There aren’t any functions which scrape data from a reliable source. As
-of now, the size of this package is ~41.68 MB.
+of now, the size of this package is ~17.09 MB.
 
 If the size isn’t a concern, you can install the development version
 from GitHub:
