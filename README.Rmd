@@ -40,3 +40,10 @@ library(tibble)
 
 as_tibble(tng$`The Inner Light`)
 ```
+
+The Deep Space Nine series is also available:
+
+```{r}
+as_tibble(ds9$Chimera)
+```
+
