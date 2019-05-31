@@ -56,5 +56,14 @@ as_tibble(ds9$Chimera) %>%
   glimpse()
 ```
 
+The raw text files were parsed using the scripts found in the data-raw folder of this repository. Below is a visual explanation:
 
+```{r parse_visual}
+ds9$Emissary %>% 
+  .[26, ] %>% 
+  glimpse()
+```
 
+```{r echo=FALSE}
+knitr::include_graphics("man/figures/parse-diagram.png")
+```

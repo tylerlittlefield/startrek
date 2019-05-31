@@ -89,3 +89,21 @@ as_tibble(ds9$Chimera) %>%
 #> $ description <chr> "(taking a seat)"
 #> $ line        <chr> "What's that?"
 ```
+
+The raw text files were parsed using the scripts found in the data-raw
+folder of this repository. Below is a visual explanation:
+
+``` r
+ds9$Emissary %>% 
+  .[26, ] %>% 
+  glimpse()
+#> Observations: 1
+#> Variables: 5
+#> $ perspective <chr> "10 INT. SISKO'S QUARTERS (OPTICAL)"
+#> $ setting     <chr> "Destroyed... an explosion has ripped a hole in the …
+#> $ character   <chr> "SISKO"
+#> $ description <chr> "(calm, controlled)"
+#> $ line        <chr> "It's gonna be okay... I'll get you  out of there...…
+```
+
+<img src="man/figures/parse-diagram.png" width="100%" />
