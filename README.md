@@ -58,6 +58,33 @@ tng$the_inner_light
 #> # … with 400 more rows
 ```
 
+Or access the entire series and play with the data in creative ways. For
+example, we might infer character specific episodes by counting the
+number of lines each character has in each episode:
+
+``` r
+tng %>% 
+  bind_rows(.id = "episode") %>% 
+  select(episode, everything()) %>% 
+  group_by(episode) %>% 
+  count(character, sort = TRUE)
+#> # A tibble: 4,188 x 3
+#> # Groups:   episode [175]
+#>    episode               character     n
+#>    <chr>                 <chr>     <int>
+#>  1 all_good_things       PICARD      348
+#>  2 encounter_at_farpoint PICARD      224
+#>  3 interface             GEORDI      197
+#>  4 future_imperfect      RIKER       183
+#>  5 frame_of_mind         RIKER       177
+#>  6 the_outcast           RIKER       173
+#>  7 suspicions            BEVERLY     172
+#>  8 captains_holiday      PICARD      171
+#>  9 bloodlines            PICARD      168
+#> 10 remember_me           BEVERLY     165
+#> # … with 4,178 more rows
+```
+
 The Deep Space Nine series is also available:
 
 ``` r

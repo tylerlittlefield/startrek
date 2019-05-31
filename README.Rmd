@@ -51,6 +51,17 @@ library(dplyr)
 tng$the_inner_light
 ```
 
+Or access the entire series and play with the data in creative ways. For example, we might infer character specific episodes by counting the number of lines each character has in each episode:
+
+```{r}
+tng %>% 
+  bind_rows(.id = "episode") %>% 
+  select(episode, everything()) %>% 
+  group_by(episode) %>% 
+  count(character, sort = TRUE)
+```
+
+
 The Deep Space Nine series is also available:
 
 ```{r}
