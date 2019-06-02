@@ -1,31 +1,22 @@
-## code to prepare `tng` dataset goes here
 library(tidyverse)
-library(glue)
 
-scripts <- list.files("inst/extdata/scripts-ds9", full.names = TRUE)
-
-raw <- sapply(scripts, read_lines)
-raw_squished <- lapply(raw, str_squish)
-raw_rm_empty <- lapply(raw_squished, function(x) x[x != ""])
-
-x <- lapply(raw_rm_empty, function(x) which(str_detect(x[1:10], '^"') == TRUE))
-x_idx <- unlist(unname(x))
-
-titles <- unlist(unname(mapply(`[`, raw_rm_empty, x_idx)))
-
-scripts_to_df <- function(x) {
-  message(glue("Converting [{basename(x)}] from [{gsub(basename(path = x), '', x)}]"))
-  read_lines(x, progress = TRUE) %>%
+extract_133 <- function(x) {
+  x %>%
+    read_lines() %>%
     .[. != ""] %>%
     enframe("line", "text") %>%
     mutate(
       part = case_when(
-        str_detect(text, "^[0-9]") ~ str_squish(str_remove_all(text, "\t")),
+        str_detect(text, "^\t[^\t][[:upper:]]") ~ str_squish(str_remove_all(text, "\t")),
         TRUE ~ NA_character_
       ),
       setting = case_when(
         str_detect(text, "^\t[^\t]") ~ str_remove_all(text, "\t"),
         TRUE ~ NA_character_
+      ),
+      setting = case_when(
+        part == setting ~ NA_character_,
+        TRUE ~ setting
       ),
       character_line = case_when(
         str_detect(text, "^\t\t\t[^\t]") ~ str_remove_all(text, "\t"),
@@ -41,9 +32,6 @@ scripts_to_df <- function(x) {
       )
     ) %>%
     fill(part, character, .direction = "down") %>%
-    # group_by(character) %>%
-    # fill(character_desc, .direction = "down") %>%
-    # ungroup() %>%
     select(-text) %>%
     drop_na(part) %>%
     group_by(id = cumsum(is.na(setting))) %>%
@@ -75,15 +63,8 @@ scripts_to_df <- function(x) {
     arrange(line) %>%
     ungroup() %>%
     select(-id) %>%
-    distinct(part, setting, character_line, character_desc, character, .keep_all = TRUE) %>%
-    set_names("id", "perspective", "setting", "line", "description", "character") %>%
+    distinct(part, setting, character_line, character_desc, character) %>%
+    set_names("perspective", "setting", "line", "description", "character") %>%
     distinct(line, .keep_all = TRUE) %>% # because character line is duplicated at times and the first one is what we want
-    select(id, perspective, setting, character, description, line)
+    select(perspective, setting, character, description, line)
 }
-
-ds9 <- lapply(scripts, scripts_to_df)
-titles <- gsub('"', "", titles)
-titles <- str_squish(titles)
-names(ds9) <- titles
-
-usethis::use_data(ds9, overwrite = TRUE)

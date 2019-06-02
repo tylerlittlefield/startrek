@@ -48,7 +48,7 @@ library(startrek)
 library(tibble)
 library(dplyr)
 
-tng$the_inner_light
+tng$`The Inner Light`
 ```
 
 Or access the entire series and play with the data in creative ways. For example, we might infer character specific episodes by counting the number of lines each character has in each episode:
@@ -65,13 +65,13 @@ tng %>%
 The Deep Space Nine series is also available:
 
 ```{r}
-ds9$chimera
+ds9$Chimera
 ```
 
 The columns have been arranged in a specific order to read from left to right or when using `glimpse()`, top to bottom. For example:
 
 ```{r}
-ds9$chimera %>% 
+ds9$Chimera %>% 
   .[5, ] %>% 
   glimpse()
 ```
@@ -79,7 +79,7 @@ ds9$chimera %>%
 The raw text files were parsed using the scripts found in the data-raw folder of this repository. Below is a visual explanation:
 
 ```{r parse_visual}
-ds9$emissary %>% 
+ds9$Emissary %>% 
   .[26, ] %>% 
   glimpse()
 ```

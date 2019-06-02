@@ -1,19 +1,21 @@
-## code to prepare `tng` dataset goes here
 library(tidyverse)
+library(janitor)
 library(glue)
 
-scripts <- list.files("inst/extdata/scripts-ds9", full.names = TRUE)
+source("data-raw/tng-episode-133.R")
 
-raw <- sapply(scripts, read_lines)
-raw_squished <- lapply(raw, str_squish)
-raw_rm_empty <- lapply(raw_squished, function(x) x[x != ""])
+extract_titles <- function(scripts) {
+  raw <- sapply(scripts, read_lines)
+  raw_squished <- lapply(raw, str_squish)
+  raw_rm_empty <- lapply(raw_squished, function(x) x[x != ""])
+  output <- gsub('"', "", unlist(unname(lapply(raw_rm_empty, `[[`, 2))))
+  rm("raw", "raw_squished", "raw_rm_empty")
+  output
+}
 
-x <- lapply(raw_rm_empty, function(x) which(str_detect(x[1:10], '^"') == TRUE))
-x_idx <- unlist(unname(x))
+tng_scripts <- list.files("inst/extdata/scripts-tng", full.names = TRUE)
 
-titles <- unlist(unname(mapply(`[`, raw_rm_empty, x_idx)))
-
-scripts_to_df <- function(x) {
+tidy_tng <- function(x) {
   message(glue("Converting [{basename(x)}] from [{gsub(basename(path = x), '', x)}]"))
   read_lines(x, progress = TRUE) %>%
     .[. != ""] %>%
@@ -41,9 +43,6 @@ scripts_to_df <- function(x) {
       )
     ) %>%
     fill(part, character, .direction = "down") %>%
-    # group_by(character) %>%
-    # fill(character_desc, .direction = "down") %>%
-    # ungroup() %>%
     select(-text) %>%
     drop_na(part) %>%
     group_by(id = cumsum(is.na(setting))) %>%
@@ -58,8 +57,6 @@ scripts_to_df <- function(x) {
       character_line = paste0(character_line, collapse = " "),
       character_line = str_remove(character_line, "NA ")
     ) %>%
-    # fill(character_desc, .direction = "down") %>%
-    # filter(!str_detect(character_desc, "^\\(")) %>%
     ungroup() %>%
     fill(setting, .direction = "down") %>%
     group_by(id = cumsum(is.na(character_desc))) %>%
@@ -77,13 +74,16 @@ scripts_to_df <- function(x) {
     select(-id) %>%
     distinct(part, setting, character_line, character_desc, character, .keep_all = TRUE) %>%
     set_names("id", "perspective", "setting", "line", "description", "character") %>%
-    distinct(line, .keep_all = TRUE) %>% # because character line is duplicated at times and the first one is what we want
+    distinct(line, .keep_all = TRUE) %>%
     select(id, perspective, setting, character, description, line)
 }
 
-ds9 <- lapply(scripts, scripts_to_df)
-titles <- gsub('"', "", titles)
-titles <- str_squish(titles)
-names(ds9) <- titles
+tng_first <- lapply(tng_scripts[1:31], tidy_tng)
+tng_133 <- extract_133(tng_scripts[32])
+tng_last <- lapply(tng_scripts[33:176], tidy_tng)
 
-usethis::use_data(ds9, overwrite = TRUE)
+tng_titles <- extract_titles(tng_scripts)
+tng <- c(tng_first, list(tng_133), tng_last)
+names(tng) <- str_squish(tng_titles)
+
+usethis::use_data(tng, overwrite = TRUE)
