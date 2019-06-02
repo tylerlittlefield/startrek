@@ -25,7 +25,7 @@ pkg_size <- function(package) {
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/tyluRp/startrek?branch=master&svg=true)](https://ci.appveyor.com/project/tyluRp/startrek)
 <!-- badges: end -->
 
-The goal of startrek is to access Star Trek transcripts in a [`data.frame`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/data.frame.html) for easy analysis. All transcripts have been parsed from text files to a [tidy data](http://vita.had.co.nz/papers/tidy-data.html) format.
+The goal of startrek is to access Star Trek transcripts in a [`data.frame`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/data.frame.html) for easy analysis. All transcripts have been parsed from text files to a [tidy data](http://vita.had.co.nz/papers/tidy-data.html) format. 
 
 ## Installation
 
@@ -47,6 +47,7 @@ To access an episode transcript from The Next Generation series, see the `tng` l
 library(startrek)
 library(tibble)
 library(dplyr)
+library(tidyr)
 
 tng$`The Inner Light`
 ```
@@ -61,11 +62,28 @@ tng %>%
   count(character, sort = TRUE)
 ```
 
-
 The Deep Space Nine series is also available:
 
 ```{r}
 ds9$Chimera
+```
+
+If you want both datasets together, one approach might be to created a nested data frame:
+
+```{r}
+all_episodes <- function(.data, series_name) {
+  .data %>% 
+    bind_rows(.id = "episode") %>% 
+    mutate(series = series_name) %>% 
+    select(series, everything())
+}
+
+tng_all <- all_episodes(tng, "TNG")
+ds9_all <- all_episodes(ds9, "DS9")
+
+bind_rows(tng_all, ds9_all) %>% 
+  group_by(series, episode) %>% 
+  nest() 
 ```
 
 The columns have been arranged in a specific order to read from left to right or when using `glimpse()`, top to bottom. For example:

@@ -40,6 +40,7 @@ To access an episode transcript from The Next Generation series, see the
 library(startrek)
 library(tibble)
 library(dplyr)
+library(tidyr)
 
 tng$`The Inner Light`
 #> # A tibble: 410 x 6
@@ -103,6 +104,39 @@ ds9$Chimera
 #>  9   108 2 CONTINUED: O'Brien's featu… ODO       (misundersta… You don't t…
 #> 10   110 2 CONTINUED: O'Brien's featu… O'BRIEN   <NA>          I'm sure sh…
 #> # … with 405 more rows
+```
+
+If you want both datasets together, one approach might be to created a
+nested data frame:
+
+``` r
+all_episodes <- function(.data, series_name) {
+  .data %>% 
+    bind_rows(.id = "episode") %>% 
+    mutate(series = series_name) %>% 
+    select(series, everything())
+}
+
+tng_all <- all_episodes(tng, "TNG")
+ds9_all <- all_episodes(ds9, "DS9")
+
+bind_rows(tng_all, ds9_all) %>% 
+  group_by(series, episode) %>% 
+  nest() 
+#> # A tibble: 349 x 3
+#>    series episode                     data              
+#>    <chr>  <chr>                       <list>            
+#>  1 TNG    Encounter at Farpoint       <tibble [805 × 6]>
+#>  2 TNG    The Naked Now               <tibble [405 × 6]>
+#>  3 TNG    Code of Honor               <tibble [438 × 6]>
+#>  4 TNG    Haven                       <tibble [421 × 6]>
+#>  5 TNG    Where None Have Gone Before <tibble [409 × 6]>
+#>  6 TNG    The Last Outpost            <tibble [493 × 6]>
+#>  7 TNG    Lonely Among Us             <tibble [450 × 6]>
+#>  8 TNG    Justice                     <tibble [452 × 6]>
+#>  9 TNG    The Battle                  <tibble [523 × 6]>
+#> 10 TNG    Hide And Q                  <tibble [363 × 6]>
+#> # … with 339 more rows
 ```
 
 The columns have been arranged in a specific order to read from left to
