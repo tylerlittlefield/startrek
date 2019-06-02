@@ -16,11 +16,13 @@ The goal of startrek is to access Star Trek transcripts in a
 for easy analysis. All transcripts have been parsed from text files to a
 [tidy data](http://vita.had.co.nz/papers/tidy-data.html) format.
 
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+
 ## Installation
 
 Keep in mind that this is a data package which stores the data locally.
 There aren’t any functions which scrape data from a reliable source. As
-of now, the size of this package is ~17.57 MB.
+of now, the size of this package is ~17.7 MB.
 
 If the size isn’t a concern, you can install the development version
 from GitHub:

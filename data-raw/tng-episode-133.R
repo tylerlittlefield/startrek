@@ -63,8 +63,8 @@ extract_133 <- function(x) {
     arrange(line) %>%
     ungroup() %>%
     select(-id) %>%
-    distinct(part, setting, character_line, character_desc, character) %>%
-    set_names("perspective", "setting", "line", "description", "character") %>%
+    distinct(part, setting, character_line, character_desc, character, .keep_all = TRUE) %>%
+    set_names("id", "perspective", "setting", "line", "description", "character") %>%
     distinct(line, .keep_all = TRUE) %>% # because character line is duplicated at times and the first one is what we want
-    select(perspective, setting, character, description, line)
+    select(id, perspective, setting, character, description, line)
 }
